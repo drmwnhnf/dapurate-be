@@ -1,0 +1,32 @@
+CREATE TABLE scores (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+
+    clean_sample INT NOT NULL DEFAULT 0,
+    total_sample INT NOT NULL DEFAULT 0,
+    score FLOAT NOT NULL DEFAULT 0,
+    date DATE UNIQUE NOT NULL DEFAULT CURRENT_DATE,
+
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE samples (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    score_id UUID REFERENCES scores(id) ON DELETE CASCADE,
+
+    is_clean BOOLEAN NOT NULL DEFAULT TRUE,
+
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE violations (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    score_id UUID REFERENCES scores(id) ON DELETE CASCADE,
+    sample_id UUID REFERENCES samples(id) ON DELETE CASCADE,
+
+    name VARCHAR(256) NOT NULL,
+    total INT NOT NULL,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
