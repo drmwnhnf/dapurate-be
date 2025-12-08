@@ -23,8 +23,6 @@ async function requestDetect(filename) {
         maxBodyLength: Infinity,
     });
 
-    console.log('Detect API response:', detectResp.data);
-
     saveBase64Result(filename, detectResp.data.result);
 
     return detectResp.data;
@@ -47,7 +45,6 @@ async function saveBase64Result(filename, base64) {
 
     const filePath = path.join(dir, filename);
     await fs.promises.writeFile(filePath, buffer);
-    console.log('Saved result image:', filePath);
     return filePath;
 }
 
