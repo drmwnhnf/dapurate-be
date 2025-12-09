@@ -4,7 +4,7 @@ const axios = require('axios');
 const FormData = require('form-data');
 const { ml_api_url } = require('../configs/envConfig');
 
-async function requestDetect(filename) {
+async function requestDetect(res, filename) {
     if (!filename) {
         return res.status(400).json({ message: 'filename is required in request body' });
     }

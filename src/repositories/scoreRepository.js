@@ -1,5 +1,4 @@
 const { pool } = require('../configs/dbConfig');
-const { get } = require('../routes/imageRoute');
 
 async function getScorebyId(id) {
     const res = await pool.query(

@@ -11,7 +11,7 @@ async function uploadImage(req, res) {
     try {
         const filename = req.filename;
 
-        const detectResult = await detectService.requestDetect(filename);
+        const detectResult = await detectService.requestDetect(res, filename);
 
         if (!detectResult.is_clean) {
             await sampleRepository.updateSample(req.sample.id, false);

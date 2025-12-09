@@ -55,8 +55,7 @@
         ws.onmessage = (event) => {
             // Decode base64 to image
             try {
-                const base64Data = event.data;
-                imageEl.src = 'data:image/png;base64,' + base64Data;
+                imageEl.src = URL.createObjectURL(event.data);
                 imageEl.style.display = 'block';
             } catch (error) {
                 console.error('Error decoding image:', error);
