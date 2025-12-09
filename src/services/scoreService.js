@@ -49,7 +49,7 @@ async function countTodayScore() {
 
 async function countScorebyId(scoreId) {
     try {
-        const score = await scoreRepository.getScoreById(scoreId);
+        const score = await scoreRepository.getScorebyId(scoreId);
 
         const samples = await sampleRepository.getSamplesByScoreId(score.id);
 

@@ -1,4 +1,13 @@
 const { pool } = require('../configs/dbConfig');
+const { get } = require('../routes/imageRoute');
+
+async function getScorebyId(id) {
+    const res = await pool.query(
+        'SELECT * FROM scores WHERE id = $1',
+        [id]
+    );
+    return res.rows[0];
+}
 
 async function getTodayScore() {
     const res = await pool.query(
@@ -51,5 +60,6 @@ module.exports = {
     getScorebyDate,
     createScore,
     createDefaultScore,
-    updateScore
+    updateScore,
+    getScorebyId
 };
