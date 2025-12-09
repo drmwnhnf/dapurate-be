@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Image Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+        }
+        #status {
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        #image {
+            max-width: 600px;
+            max-height: 600px;
+            border: 2px solid #333;
+            display: none;
+        }
+        .connected {
+            color: green;
+        }
+        .disconnected {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="status" class="disconnected">Disconnected</div>
+    <img id="image" alt="Streaming Image">
+
+    <script>
+        const ws = new WebSocket('ws://localhost:8080');
+        const statusEl = document.getElementById('status');
+        const imageEl = document.getElementById('image');
+        let messageSent = false;
+
+        ws.onopen = () => {
+            statusEl.textContent = 'Connected';
+            statusEl.className = 'connected';
+            
+            // Send "client" message once
+            ws.send('client');
+            messageSent = true;
+        };
+
+        ws.onmessage = (event) => {
+            // Decode base64 to image
+            try {
+                const base64Data = event.data;
+                imageEl.src = 'data:image/png;base64,' + base64Data;
+                imageEl.style.display = 'block';
+            } catch (error) {
+                console.error('Error decoding image:', error);
+            }
+        };
+
+        ws.onclose = () => {
+            statusEl.textContent = 'Disconnected';
+            statusEl.className = 'disconnected';
+        };
+
+        ws.onerror = (error) => {
+            console.error('WebSocket error:', error);
+            statusEl.textContent = 'Error';
+            statusEl.className = 'disconnected';
+        };
+    </script>
+</body>
+</html>

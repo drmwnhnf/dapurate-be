@@ -33,6 +33,7 @@ wss.on('connection', (ws) => {
 
   ws.on('close', () => webSocketService.handleWsClose(ws));
 });
+logger.info('WebSocket server is running.');
 
 app.use(helmet());
 app.use(cors(corsOptions));
