@@ -32,7 +32,7 @@ async function getViolationSummarybyScoreId(req, res) {
             if (!acc[violation.name]) {
                 acc[violation.name] = 0;
             }
-            acc[violation.name] += violation.count;
+            acc[violation.name] += violation.total;
             return acc;
         }, {});
 
