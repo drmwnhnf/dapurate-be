@@ -15,4 +15,7 @@ router.get('/raw/:id', imageController.getRawImage);
 // tested
 router.get('/result/:id', imageController.getResultImage);
 
+// tested
+router.get('/shoot', imageController.shootImage);
+
 module.exports = router;
