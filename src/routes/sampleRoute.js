@@ -7,6 +7,9 @@ const router = express.Router();
 router.get('/score/:id', sampleController.getSamplesbyScoreId);
 
 // tested
+router.get('/:id', sampleController.getSamplebyId);
+
+// tested
 router.put('/:id', sampleController.updateSample);
 
 // tested

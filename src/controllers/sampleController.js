@@ -18,6 +18,20 @@ async function getSamplesbyScoreId(req, res) {
     }
 }
 
+async function getSamplebyId(req, res) {
+    try {
+        const sampleId = req.params.id;
+        const sample = await sampleRepository.getSampleById(sampleId);
+        if (!sample) {
+            return res.status(404).json({ message: 'Sample not found', data: null, success: false });
+        }
+        return res.status(200).json({ message: 'Sample retrieved successfully', data: sample, success: true });
+    } catch (error) {
+        logger.error('Error retrieving sample by ID:', error);
+        return res.status(500).json({ message: 'Internal server error', data: null, success: false });
+    }
+}
+
 async function updateSample(req, res) {
     try {
         const sampleId = req.params.id;
@@ -58,5 +72,6 @@ async function deleteSample(req, res) {
 module.exports = {
     getSamplesbyScoreId,
     deleteSample,
-    updateSample
+    updateSample,
+    getSamplebyId
 };
