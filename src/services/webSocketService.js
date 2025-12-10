@@ -1,10 +1,11 @@
 const WebSocket = require('ws');
 const logger = require('../utils/logger');
+const envConfig = require('../configs/envConfig');
 
 let cameraSocket = null;
 let clientSockets = new Set();
 let shootInterval = null;
-let shootIntervalTime = 5000; // in milliseconds
+let shootIntervalTime = envConfig.shoot_interval_ms;
 
 function startShootLoop(ws) {
     if (shootInterval) clearInterval(shootInterval);
